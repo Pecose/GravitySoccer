@@ -62,7 +62,5 @@ public class CollisionBumperBehavior implements Behavior {
 
         initialized = true;
 
-        // 🔎 Debug facultatif
-        System.out.println("[CollisionBumperBehavior] Bumper physique initialisé.");
     }
 }

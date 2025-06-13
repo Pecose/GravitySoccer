@@ -19,6 +19,8 @@ import entities.Entity;
 import entities.behavior.collision.CollisionManager;
 import entities.cameras.FreeCamera;
 import entities.world.PhysicsWorld;
+import goal.BlueGoal;
+import goal.RedGoal;
 import players.Ball;
 import players.blueTeam.BlueDef;
 import players.redTeam.RedDef;
@@ -44,7 +46,6 @@ public class Control extends ApplicationAdapter {
         mapRenderer = OG.get().newMapRenderer();
 
         PhysicsWorld.get().setContactListener(new CollisionManager());
-        
         
         entities.add(new Bumper(-10, -540, 10, -540, 0, -530));
         entities.add(new Bumper(-10, 540, 10, 540, 0, 530));
@@ -124,6 +125,8 @@ public class Control extends ApplicationAdapter {
         
         entities.add(new Ball( 0,   0, 15));
         entities.add(new GameHUD());
+        entities.add(new RedGoal());
+        entities.add(new BlueGoal());
     }
 
     @Override
