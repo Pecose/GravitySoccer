@@ -1,6 +1,6 @@
 package edges;
 
-import entities.behavior.collision.DownTouchBehavior;
+import entities.behavior.collision.edges.DownTouchBehavior;
 
 public class DownEdge extends Edges{
 

@@ -1,4 +1,4 @@
-package entities.behavior.collision;
+package entities.behavior.collision.bodys;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.Contact;

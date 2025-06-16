@@ -3,7 +3,7 @@ package edges;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
-import entities.behavior.collision.CollisionEdgeBehavior;
+import entities.behavior.collision.edges.CollisionEdgeBehavior;
 
 public class Edges extends Entity{
 

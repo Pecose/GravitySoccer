@@ -1,4 +1,4 @@
-package entities.behavior.collision;
+package entities.behavior.collision.bumper;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.*;
@@ -6,6 +6,7 @@ import com.badlogic.gdx.physics.box2d.*;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
+import entities.behavior.collision.bodys.CollisionBits;
 import entities.world.PhysicsWorld;
 
 public class CollisionBumperBehavior implements Behavior {

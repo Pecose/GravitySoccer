@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
-import entities.behavior.collision.CollisionBumperBehavior;
+import entities.behavior.collision.bumper.CollisionBumperBehavior;
 
 public class Bumper extends Entity {
 

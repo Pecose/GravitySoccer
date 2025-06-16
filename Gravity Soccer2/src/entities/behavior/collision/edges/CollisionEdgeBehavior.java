@@ -1,4 +1,4 @@
-package entities.behavior.collision;
+package entities.behavior.collision.edges;
 
 import com.badlogic.gdx.physics.box2d.*;
 import engine.Control;
@@ -26,7 +26,7 @@ public class CollisionEdgeBehavior implements Behavior {
         fd.shape = shape;
         fd.density = 0f; // inutile pour un StaticBody
         fd.restitution = 0f; // pas de rebond
-        fd.friction = 0.5f; // optionnel : ajuster selon comportement voulu
+        fd.friction = 0f; // optionnel : ajuster selon comportement voulu
 
         body.createFixture(fd);
         shape.dispose();

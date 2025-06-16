@@ -1,4 +1,4 @@
-package entities.behavior.collision;
+package entities.behavior.collision.ball;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -9,33 +9,34 @@ import entities.Entity;
 import entities.behavior.Behavior;
 import entities.world.PhysicsWorld;
 
-public class CollisionBodyBehavior implements Behavior {
+public class BallTouchGoalZoneBehavior implements Behavior {
     private boolean initialized = false;
 
     @Override
     public void update(Control control, Entity entity) {
-    	if (initialized) return;
-        // 1) Récupérer le Body créé en Entity
+        if (initialized) return;
         Body body = entity.getBody();
         if (body == null) return;
 
-        // 2) Initialiser la fixture (une fois)
+        // 1) Création de la shape circulaire (rayon en mètres)
         CircleShape shape = new CircleShape();
-        // radius stocké en pixels → convertir en mètres
         shape.setRadius(entity.getSize() / PhysicsWorld.PPM);
 
+        // 2) Définition de la fixture
         FixtureDef fd = new FixtureDef();
-        fd.shape = shape;
-        fd.density     = 5f;
-        fd.restitution = 0.6f;
-        fd.friction    = 0f;
-        
-        fd.filter.categoryBits = CollisionBits.CATEGORY_PLAYER;
-        fd.filter.maskBits = ~CollisionBits.CATEGORY_BUMPER;
+        fd.shape       = shape;
+        fd.density     = 5f;    // masse
+        fd.restitution = 0.6f;  // rebond “élastique”
+        fd.friction    = 0f;    // pas de frottement
 
+        // 3) Filtrage : seule la balle (CAT_BALL) rebondit sur edges, bumpers, goal-zones, joueurs…
+//        fd.filter.categoryBits
+;
+
+        // 4) On fixe la fixture sur le body
         body.createFixture(fd);
         shape.dispose();
-        initialized = true;
 
+        initialized = true;
     }
 }

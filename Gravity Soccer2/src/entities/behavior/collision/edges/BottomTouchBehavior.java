@@ -1,10 +1,11 @@
-package entities.behavior.collision;
+package entities.behavior.collision.edges;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.BodyDef;
 
 import entities.Entity;
 import entities.behavior.Behavior;
+import entities.behavior.collision.bodys.CollisionReactive;
 import players.Player;
 
 public class BottomTouchBehavior implements Behavior, CollisionReactive {

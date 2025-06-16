@@ -10,7 +10,7 @@ import com.badlogic.gdx.physics.box2d.BodyDef;
 import com.badlogic.gdx.physics.box2d.World;
 
 import entities.behavior.Behavior;
-import entities.behavior.collision.CollisionReactive;
+import entities.behavior.collision.bodys.CollisionReactive;
 import entities.world.PhysicsWorld;
 
 public abstract class Entity implements Actor{

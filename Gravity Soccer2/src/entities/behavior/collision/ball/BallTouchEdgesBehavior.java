@@ -1,10 +1,11 @@
-package entities.behavior.collision;
+package entities.behavior.collision.ball;
 
 import com.badlogic.gdx.math.Vector2;
 
 import edges.Edges;
 import entities.Entity;
 import entities.behavior.Behavior;
+import entities.behavior.collision.bodys.CollisionReactive;
 
 public class BallTouchEdgesBehavior implements Behavior, CollisionReactive {
 
@@ -16,11 +17,7 @@ public class BallTouchEdgesBehavior implements Behavior, CollisionReactive {
     public void onCollision(Entity self, Entity other) {
     	if (!(other instanceof Edges)) return; 
     	Vector2 velocity = self.getBody().getLinearVelocity();
-
-        // Direction opposée (rebond) + boost
-        Vector2 impulse = velocity.cpy().nor().scl(0.5f); // Plus ou moins selon le boost désiré
-
-        // Appliquer à la balle (self)
+        Vector2 impulse = velocity.cpy().nor().scl(0.5f); 
         self.getBody().applyLinearImpulse(impulse, self.getBody().getWorldCenter(), true);
     }
 

@@ -1,4 +1,4 @@
-package entities.behavior.collision;
+package entities.behavior.collision.ball;
 
 import com.badlogic.gdx.physics.box2d.Body;
 import com.badlogic.gdx.physics.box2d.CircleShape;
@@ -7,6 +7,7 @@ import com.badlogic.gdx.physics.box2d.FixtureDef;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
+import entities.behavior.collision.bodys.CollisionBits;
 import entities.world.PhysicsWorld;
 
 public class CollisionBallBehavior implements Behavior {

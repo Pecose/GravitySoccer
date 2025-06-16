@@ -1,9 +1,10 @@
-package entities.behavior.collision;
+package entities.behavior.collision.ball;
 
 import com.badlogic.gdx.math.Vector2;
 import bumper.Bumper;
 import entities.Entity;
 import entities.behavior.Behavior;
+import entities.behavior.collision.bodys.CollisionReactive;
 
 public class BallTouchBumperBehavior implements Behavior, CollisionReactive {
 

@@ -1,4 +1,4 @@
-package entities.behavior.collision;
+package entities.behavior.collision.bodys;
 
 import entities.Entity;
 

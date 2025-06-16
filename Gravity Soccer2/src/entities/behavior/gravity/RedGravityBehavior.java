@@ -3,7 +3,7 @@ package entities.behavior.gravity;
 import com.badlogic.gdx.physics.box2d.Body;
 import engine.Control;
 import entities.Entity;
-import entities.behavior.collision.CollisionReactive;
+import entities.behavior.collision.bodys.CollisionReactive;
 import entities.world.PhysicsWorld;
 
 public class RedGravityBehavior implements CollisionReactive, GravityBehavior {

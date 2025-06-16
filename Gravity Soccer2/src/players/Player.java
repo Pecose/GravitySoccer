@@ -3,15 +3,17 @@ package players;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
-import entities.behavior.collision.CollisionBodyBehavior;
+import entities.behavior.collision.bodys.CollisionBodyBehavior;
+import players.team.Side;
 
 public class Player extends Entity{
 
-	public Player(int x, int y, int radius) {
+	private Side side = Side.NONE;
+	
+	public Player(int x, int y, int radius, Side side) {
         super(x, y, radius);
-        
+        this.side = side;
         this.addBehavior(CollisionBodyBehavior.class, new CollisionBodyBehavior());
-        
     }
 
 	@Override
@@ -19,6 +21,10 @@ public class Player extends Entity{
 		for(Behavior behavior : this.getBehaviors()) {
 			behavior.update(control, this);
 		}
+	}
+
+	public Side getSide() {
+		return this.side;
 	}
 
 }

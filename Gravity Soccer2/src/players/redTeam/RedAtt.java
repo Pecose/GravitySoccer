@@ -9,11 +9,12 @@ import entities.behavior.gravity.RedGravityBehavior;
 import entities.behavior.velocity.AttVelocityLimitBehavior;
 import entities.behavior.velocity.VelocityLimitBehavior;
 import players.Player;
+import players.team.Side;
 
 public class RedAtt extends Player {
 
-    public RedAtt(int x, int y, int radius) {
-        super(x, y, radius);
+    public RedAtt(int x, int y, int radius, Side team) {
+        super(x, y, radius, team);
         this.addBehavior(GravityBehavior.class, new RedGravityBehavior());
         this.addBehavior(VelocityLimitBehavior.class, new AttVelocityLimitBehavior());
     }
