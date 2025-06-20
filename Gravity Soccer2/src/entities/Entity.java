@@ -39,7 +39,7 @@ public abstract class Entity implements Actor{
     
     public Entity(float x, float y, float s) {
         this.size = s;
-        World world = PhysicsWorld.get();
+        World world = PhysicsWorld.getWorld();
         BodyDef bd = new BodyDef();
         bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(x / PhysicsWorld.PPM, y / PhysicsWorld.PPM);
@@ -51,7 +51,7 @@ public abstract class Entity implements Actor{
     public Entity(float x, float y, float w, float h) {
     	this.width = w;
     	this.height = h;
-        World world = PhysicsWorld.get();
+        World world = PhysicsWorld.getWorld();
         BodyDef bd = new BodyDef();
 //        bd.type = BodyDef.BodyType.DynamicBody;
         bd.position.set(x / PhysicsWorld.PPM, y / PhysicsWorld.PPM);
@@ -84,7 +84,7 @@ public abstract class Entity implements Actor{
         bd.type = BodyDef.BodyType.StaticBody;
         bd.position.set(center);
 
-        Body body = PhysicsWorld.get().createBody(bd);
+        Body body = PhysicsWorld.getWorld().createBody(bd);
         body.setUserData(this);
 
         this.setBody(body);

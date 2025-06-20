@@ -20,8 +20,8 @@ import entities.world.PhysicsWorld;
 import goal.BlueGoal;
 import goal.RedGoal;
 import players.Ball;
-import players.blueTeam.BlueDef;
-import players.redTeam.RedDef;
+import players.blueTeam.LeftPlayer;
+import players.redTeam.RightPlayer;
 import players.team.Side;
 import score.GameHUD;
 import world.MapRenderer;
@@ -30,6 +30,8 @@ public class Control extends ApplicationAdapter {
     public ShapeRenderer renderer;
     public SpriteBatch batch;
     public static FreeCamera camera;
+    @SuppressWarnings("unused")
+	private DebugSystem debugSys;
 
     private MapRenderer mapRenderer;
     
@@ -42,8 +44,9 @@ public class Control extends ApplicationAdapter {
         FreeCamera.getCamera().position.set(0, 0, 0);
         mapRenderer = OG.get().newMapRenderer();
 
-        PhysicsWorld.get().setContactListener(new CollisionManager());
-        
+        PhysicsWorld.getWorld().setContactListener(new CollisionManager());
+        debugSys = new DebugSystem(PhysicsWorld.getWorld(), FreeCamera.camera, PhysicsWorld.PPM);
+
         Registry.add(new Bumper(-10, -540, 10, -540, 0, -530), "Bumper1");
         Registry.add(new Bumper(-10, 540, 10, 540, 0, 530), "Bumper2");
         
@@ -60,65 +63,65 @@ public class Control extends ApplicationAdapter {
         int x, y;
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-840 + x,   0 + y,   15, Side.LEFT), "Blue1");
+        Registry.add(new LeftPlayer(-840 + x,   0 + y,   15, Side.LEFT), "Blue1");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-560 + x, -270 + y, 15, Side.LEFT), "Blue2");
+        Registry.add(new LeftPlayer(-560 + x, -270 + y, 15, Side.LEFT), "Blue2");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-560 + x,   0 + y,   15, Side.LEFT), "Blue3");
+        Registry.add(new LeftPlayer(-560 + x,   0 + y,   15, Side.LEFT), "Blue3");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-560 + x,  270 + y, 15, Side.LEFT), "Blue4");
+        Registry.add(new LeftPlayer(-560 + x,  270 + y, 15, Side.LEFT), "Blue4");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-200 + x, -360 + y, 15, Side.LEFT), "Blue5");
+        Registry.add(new LeftPlayer(-200 + x, -360 + y, 15, Side.LEFT), "Blue5");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-200 + x,   0 + y,   15, Side.LEFT), "Blue6");
+        Registry.add(new LeftPlayer(-200 + x,   0 + y,   15, Side.LEFT), "Blue6");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-200 + x,  360 + y, 15, Side.LEFT), "Blue7");
+        Registry.add(new LeftPlayer(-200 + x,  360 + y, 15, Side.LEFT), "Blue7");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-180 + x, -180 + y, 15, Side.LEFT), "Blue8");
+        Registry.add(new LeftPlayer(-180 + x, -180 + y, 15, Side.LEFT), "Blue8");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-180 + x,  180 + y, 15, Side.LEFT), "Blue9");
+        Registry.add(new LeftPlayer(-180 + x,  180 + y, 15, Side.LEFT), "Blue9");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new BlueDef(-700 + x,   0 + y,  15, Side.LEFT), "Blue10");
+        Registry.add(new LeftPlayer(-700 + x,   0 + y,  15, Side.LEFT), "Blue10");
         
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 840 + x,   0 + y,   15, Side.RIGHT), "Red1");
+        Registry.add(new RightPlayer( 840 + x,   0 + y,   15, Side.RIGHT), "Red1");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 560 + x, -270 + y, 15, Side.RIGHT), "Red2");
+        Registry.add(new RightPlayer( 560 + x, -270 + y, 15, Side.RIGHT), "Red2");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 560 + x,   0 + y,   15, Side.RIGHT), "Red3");
+        Registry.add(new RightPlayer( 560 + x,   0 + y,   15, Side.RIGHT), "Red3");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 560 + x,  270 + y, 15, Side.RIGHT), "Red4");
+        Registry.add(new RightPlayer( 560 + x,  270 + y, 15, Side.RIGHT), "Red4");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 200 + x, -360 + y, 15, Side.RIGHT), "Red5");
+        Registry.add(new RightPlayer( 200 + x, -360 + y, 15, Side.RIGHT), "Red5");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 200 + x,   0 + y,   15, Side.RIGHT), "Red6");
+        Registry.add(new RightPlayer( 200 + x,   0 + y,   15, Side.RIGHT), "Red6");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 200 + x,  360 + y, 15, Side.RIGHT), "Red7");
+        Registry.add(new RightPlayer( 200 + x,  360 + y, 15, Side.RIGHT), "Red7");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 180 + x, -180 + y, 15, Side.RIGHT), "Red8");
+        Registry.add(new RightPlayer( 180 + x, -180 + y, 15, Side.RIGHT), "Red8");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 180 + x,  180 + y, 15, Side.RIGHT), "Red9");
+        Registry.add(new RightPlayer( 180 + x,  180 + y, 15, Side.RIGHT), "Red9");
         x = (int) ((Math.random() * 20) - 10);
         y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RedDef( 700 + x,   0 + y,  15, Side.RIGHT), "Red10"); 
+        Registry.add(new RightPlayer( 700 + x,   0 + y,  15, Side.RIGHT), "Red10"); 
          
         Registry.add(new RedGoal(), "RightGoal");
         Registry.add(new BlueGoal(), "LeftGoal");
@@ -141,8 +144,8 @@ public class Control extends ApplicationAdapter {
         mapRenderer.render(this);
         
         float dt = Gdx.graphics.getDeltaTime();
-        PhysicsWorld.get().step(dt, 6, 2);
-        
+        PhysicsWorld.getWorld().step(dt, 6, 2);
+//        debugSys.render(); // debug !!!!!!
         Registry.getMap().forEach((key, character) -> {
         	((Entity)character).render(this);
         });

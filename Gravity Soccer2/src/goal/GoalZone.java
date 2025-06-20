@@ -9,7 +9,8 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
-import entities.behavior.collision.goalzone.GoalZoneScoreBehavior;
+import entities.behavior.collision.goalzone.GoalZoneBehavior;
+import entities.behavior.collision.goalzone.GoalZoneTouchBehavior;
 
 public class GoalZone extends Entity {
 
@@ -21,7 +22,7 @@ public class GoalZone extends Entity {
         super(x, y, width, height); 
         this.visibleColor = color;
         
-        this.addBehavior(GoalZoneScoreBehavior.class, new GoalZoneScoreBehavior());
+        this.addBehavior(GoalZoneBehavior.class, new GoalZoneTouchBehavior());
 
     }
 

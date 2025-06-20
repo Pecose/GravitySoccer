@@ -9,15 +9,23 @@ import entities.Entity;
 public class BlueGoal extends Entity {
 
     private GoalZone zone;
-    private GoalNet filetFond, filetGauche, filetDroit;
+    public GoalZone getZone() {
+		return zone;
+	}
+
+	public void setZone(GoalZone zone) {
+		this.zone = zone;
+	}
+
+	private GoalNet filetFond, filetGauche, filetDroit;
 
     public BlueGoal() {
         super();
 
         float fieldWidth = Gdx.graphics.getWidth();
 
-        float cageWidth = 40f;
-        float cageHeight = 170f;
+        float cageWidth = 40;
+        float cageHeight = 170;
 
         // Position de la cage (collée à gauche, centrée verticalement)
         float zoneX = - (fieldWidth / 2);
@@ -27,22 +35,13 @@ public class BlueGoal extends Entity {
         zone = new GoalZone(zoneX, zoneY, cageWidth, cageHeight, Color.BLUE);
 
         // Filet du fond (haut du rectangle, côté gauche)
-        filetFond = new GoalNet(
-            zoneX, zoneY,
-            3, cageHeight
-        );
+        filetFond = new GoalNet( zoneX, zoneY, 3, cageHeight );
 
         // Filet gauche (bord du terrain)
-        filetGauche = new GoalNet(
-            zoneX, zoneY,
-            cageWidth, 3
-        );
+        filetGauche = new GoalNet( zoneX, zoneY, cageWidth, 3 );
 
         // Filet droit (haut de la cage)
-        filetDroit = new GoalNet(
-            zoneX, zoneY + cageHeight,
-            cageWidth, 3
-        );
+        filetDroit = new GoalNet( zoneX, zoneY + cageHeight, cageWidth, 3 );
     }
 
     @Override

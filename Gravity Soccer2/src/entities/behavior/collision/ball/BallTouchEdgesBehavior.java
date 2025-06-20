@@ -17,7 +17,7 @@ public class BallTouchEdgesBehavior implements Behavior, CollisionReactive {
     public void onCollision(Entity self, Entity other) {
     	if (!(other instanceof Edges)) return; 
     	Vector2 velocity = self.getBody().getLinearVelocity();
-        Vector2 impulse = velocity.cpy().nor().scl(0.5f); 
+        Vector2 impulse = velocity.cpy().nor().scl(0.3f); 
         self.getBody().applyLinearImpulse(impulse, self.getBody().getWorldCenter(), true);
     }
 

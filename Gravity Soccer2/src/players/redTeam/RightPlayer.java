@@ -11,9 +11,9 @@ import entities.behavior.velocity.VelocityLimitBehavior;
 import players.Player;
 import players.team.Side;
 
-public class RedDef extends Player {
+public class RightPlayer extends Player {
 
-    public RedDef(int x, int y, int radius, Side team) {
+    public RightPlayer(int x, int y, int radius, Side team) {
         super(x, y, radius*2, team);
         this.addBehavior(GravityBehavior.class, new RedGravityBehavior());
         this.addBehavior(VelocityLimitBehavior.class, new DefVelocityLimitBehavior());

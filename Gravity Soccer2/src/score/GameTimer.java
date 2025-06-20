@@ -1,29 +1,17 @@
 package score;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
 
-public class GameTimer extends Entity {
+public class GameTimer {
 
-    private BitmapFont font;
-    public static float time = 90f; // 90 secondes par défaut
+    public static float time = 90f;
 
-    public GameTimer() {
-        super();
-        font = new BitmapFont();
-        font.getData().setScale(2f);
-    }
 
-    @Override
     public void render(Control control) {
-        for (Behavior behavior : this.getBehaviors()) {
-            behavior.update(control, this);
-        }
-
         time -= Gdx.graphics.getDeltaTime();
     }
     

@@ -8,7 +8,8 @@ import entities.world.PhysicsWorld;
 
 public class BlueGravityBehavior implements CollisionReactive, GravityBehavior {
     private final float accelX = 300f;   // *valeur à affiner* (px/s²)
-
+    private static RedGravityBehavior redGravityBehavior = new RedGravityBehavior();
+    
     @Override
     public void update(Control control, Entity entity) {
         Body body = entity.getBody();    // le Body unique, créé dans Entity
@@ -22,6 +23,6 @@ public class BlueGravityBehavior implements CollisionReactive, GravityBehavior {
     
     @Override
     public void onCollision(Entity self, Entity other) {
-    	self.addBehavior(GravityBehavior.class, new RedGravityBehavior());
+    	self.addBehavior(GravityBehavior.class, redGravityBehavior);
     }
 }

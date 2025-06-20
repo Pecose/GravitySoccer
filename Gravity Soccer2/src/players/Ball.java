@@ -17,6 +17,7 @@ import players.team.Side;
 public class Ball extends Entity{
 
 	private Side lastTeamTouched = Side.NONE;
+	private Color color = Color.WHITE;
 	
 	public Ball(int x, int y, int radius) {
         super(x, y, radius);
@@ -37,7 +38,7 @@ public class Ball extends Entity{
 		
 		control.renderer.begin(ShapeRenderer.ShapeType.Filled);
     	
-        control.renderer.setColor(Color.WHITE);
+        control.renderer.setColor(color);
         control.renderer.circle(this.getPosX(), this.getPosY(), this.getSize());
         
         control.renderer.end();
@@ -49,6 +50,14 @@ public class Ball extends Entity{
 
 	public void setLastTeamTouched(Side lastTeamTouched) {
 		this.lastTeamTouched = lastTeamTouched;
+	}
+
+	public Color getColor() {
+		return color;
+	}
+
+	public void setColor(Color color) {
+		this.color = color;
 	}
 
 }

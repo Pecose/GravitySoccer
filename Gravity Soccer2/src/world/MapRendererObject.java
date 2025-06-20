@@ -1,6 +1,7 @@
 package world;           // même package que l’interface MapRenderer
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -32,7 +33,7 @@ public class MapRendererObject implements MapRenderer {
 
     /** Ici, rien de vraiment dynamique ; on pourrait animer le terrain si besoin. */
     @Override
-    public void update(FreeCamera cameraController, Control control) {
+    public void update(FreeCamera freeCamera, Control control) {
         // ex. : parallax, scrolling, changement de teinte…
     }
 

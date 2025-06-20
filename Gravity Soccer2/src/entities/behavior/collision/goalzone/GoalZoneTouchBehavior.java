@@ -12,6 +12,7 @@ import entities.world.PhysicsWorld;
 
 public class GoalZoneTouchBehavior implements GoalZoneBehavior {
     private boolean initialized = false;
+    private static final float MARGIN_PX = 5f;
 
     @Override
     public void update(Control control, Entity entity) {
@@ -19,34 +20,32 @@ public class GoalZoneTouchBehavior implements GoalZoneBehavior {
         Body body = entity.getBody();
         if (body == null) return;
 
-        // 1) On crée la shape rectangulaire
+        float wPx = entity.getWidth()  - MARGIN_PX;
+        float hPx = entity.getHeight() - MARGIN_PX;
+
+        float halfW = (wPx / 2f) / PhysicsWorld.PPM;
+        float halfH = (hPx / 2f) / PhysicsWorld.PPM;
+
         PolygonShape shape = new PolygonShape();
-        float halfW = entity.getWidth()  / PhysicsWorld.PPM;
-        float halfH = entity.getHeight() / PhysicsWorld.PPM;
-        // centre de la hit-box = moitié de la largeur/hauteur
-        Vector2 center = new Vector2(halfW, halfH);
-        // setAsBox(halfX, halfY, centre, angle)
+        Vector2 center = new Vector2(halfW + 0.02f, halfH + 0.04f);
         shape.setAsBox(halfW, halfH, center, 0f);
 
-        // 2) Définition de la fixture avec rebond
         FixtureDef fd = new FixtureDef();
-        fd.shape       = shape;
-        fd.density     = 0f;    // static
-        fd.restitution = 0.6f;  // rebond “classique”
-        fd.friction    = 0f;
-
-        // Optionnel : si tu veux que seule la balle rebondisse
+        fd.shape          = shape;
+        fd.density        = 0f;     // static
+        fd.restitution    = 0.6f;   // rebond “classique”
+        fd.friction       = 0f;
         fd.filter.categoryBits = CollisionBits.CATEGORY_GOALZONE;
         fd.filter.maskBits     = CollisionBits.CATEGORY_BALL;
 
         body.createFixture(fd);
         shape.dispose();
+
         initialized = true;
     }
 
-	@Override
-	public void onCollision(Entity self, Entity other) {
-		// TODO Auto-generated method stub
-		
-	}
+    @Override
+    public void onCollision(Entity self, Entity other) {
+        // rien à faire ici pour le touch
+    }
 }

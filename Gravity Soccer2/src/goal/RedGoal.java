@@ -10,7 +10,16 @@ import entities.Entity;
 public class RedGoal extends Entity {
 
     private GoalZone zone;
-    private GoalNet filetFond, filetGauche, filetDroit;
+    
+    public GoalZone getZone() {
+		return zone;
+	}
+
+	public void setZone(GoalZone zone) {
+		this.zone = zone;
+	}
+
+	private GoalNet filetFond, filetGauche, filetDroit;
 
     public RedGoal() {
         super();

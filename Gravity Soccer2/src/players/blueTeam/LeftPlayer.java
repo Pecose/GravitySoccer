@@ -11,9 +11,9 @@ import entities.behavior.velocity.VelocityLimitBehavior;
 import players.Player;
 import players.team.Side;
 
-public class BlueDef extends Player {
+public class LeftPlayer extends Player {
 
-    public BlueDef(int x, int y, int radius, Side team) {
+    public LeftPlayer(int x, int y, int radius, Side team) {
         super(x, y, radius*2, team);
         this.addBehavior(GravityBehavior.class, new BlueGravityBehavior());
         this.addBehavior(VelocityLimitBehavior.class, new DefVelocityLimitBehavior());

@@ -28,7 +28,7 @@ public class CollisionBallBehavior implements Behavior {
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
         fd.density     = 5f;
-        fd.restitution = 0.6f;
+        fd.restitution = 0.9f;
         fd.friction    = 0f;
         
         fd.filter.categoryBits = CollisionBits.CATEGORY_BALL;
