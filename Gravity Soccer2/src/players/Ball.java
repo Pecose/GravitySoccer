@@ -1,6 +1,8 @@
 package players;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import engine.Control;
@@ -12,12 +14,13 @@ import entities.behavior.collision.ball.BallTouchEdgesBehavior;
 import entities.behavior.collision.ball.BallTouchGoalZoneBehavior;
 import entities.behavior.collision.ball.BallTouchPlayerBehavior;
 import entities.behavior.collision.ball.CollisionBallBehavior;
-import players.team.Side;
+import players.side.SideTeam;
 
 public class Ball extends Entity{
 
-	private Side lastTeamTouched = Side.NONE;
+	private SideTeam lastTeamTouched;
 	private Color color = Color.WHITE;
+	protected static Texture shadowTexture;
 	
 	public Ball(int x, int y, int radius) {
         super(x, y, radius);
@@ -28,6 +31,10 @@ public class Ball extends Entity{
         this.addBehavior(BallTouchBumperBehavior.class, new BallTouchBumperBehavior());
         this.addBehavior(BallLastTouchedBehavior.class, new BallLastTouchedBehavior());
         this.addBehavior(BallTouchGoalZoneBehavior.class, new BallTouchGoalZoneBehavior());
+        
+        if (shadowTexture == null) {
+            shadowTexture = new Texture(Gdx.files.internal("shadowBall.png"));
+        }
     }
 
 	@Override
@@ -42,14 +49,18 @@ public class Ball extends Entity{
         control.renderer.circle(this.getPosX(), this.getPosY(), this.getSize());
         
         control.renderer.end();
+        
+        control.batch.begin();
+    	control.batch.draw( shadowTexture, this.getPosX() - this.getSize()-1, this.getPosY() - this.getSize()-1);
+    	control.batch.end();
 	}
 
-	public Side getLastTeamTouched() {
+	public SideTeam getLastTeamTouched() {
 		return lastTeamTouched;
 	}
 
-	public void setLastTeamTouched(Side lastTeamTouched) {
-		this.lastTeamTouched = lastTeamTouched;
+	public void setLastTeamTouched(SideTeam side) {
+		this.lastTeamTouched = side;
 	}
 
 	public Color getColor() {

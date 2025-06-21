@@ -1,7 +1,5 @@
 package world;
 
-import com.badlogic.gdx.graphics.OrthographicCamera;
-
 import engine.Control;
 import entities.cameras.FreeCamera;
 

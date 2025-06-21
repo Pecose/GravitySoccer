@@ -7,13 +7,12 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import engine.Control;
 import entities.Entity;
-import entities.Registry;
 import entities.behavior.collision.bodys.CollisionBits;
 import entities.world.PhysicsWorld;
-import goal.BlueGoal;
-import goal.GoalZone;
 import players.Ball;
-import players.team.Side;
+import players.side.SideTeam;
+import players.side.leftTeam.LeftTeam;
+import players.side.rightTeam.RightTeam;
 import score.GameScore;
 
 public class GoalZoneScoreBehavior implements GoalZoneBehavior {
@@ -54,10 +53,10 @@ public class GoalZoneScoreBehavior implements GoalZoneBehavior {
     	if (!(other instanceof Ball)) return;
         Ball ball = (Ball) other;
 
-        Side side = ball.getLastTeamTouched();
-        if (side == Side.LEFT) {
+        SideTeam side = ball.getLastTeamTouched();
+        if (side instanceof LeftTeam) {
             GameScore.ajouterButGauche();
-        } else if (side == Side.RIGHT) {
+        } else if (side instanceof RightTeam) {
             GameScore.ajouterButDroite();
         }
     }

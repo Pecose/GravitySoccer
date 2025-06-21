@@ -1,19 +1,26 @@
 package players;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.graphics.Texture;
+
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
 import entities.behavior.collision.bodys.CollisionBodyBehavior;
-import players.team.Side;
+import players.side.SideTeam;
 
 public class Player extends Entity{
 
-	private Side side = Side.NONE;
+	private SideTeam team;
+	protected static Texture shadowTexture;
 	
-	public Player(int x, int y, int radius, Side side) {
+	public Player(int x, int y, int radius, SideTeam team) {
         super(x, y, radius);
-        this.side = side;
+        this.team = team;
         this.addBehavior(CollisionBodyBehavior.class, new CollisionBodyBehavior());
+        if (shadowTexture == null) {
+            shadowTexture = new Texture(Gdx.files.internal("shadow.png"));
+        }
     }
 
 	@Override
@@ -23,8 +30,8 @@ public class Player extends Entity{
 		}
 	}
 
-	public Side getSide() {
-		return this.side;
+	public SideTeam getSide() {
+		return this.team;
 	}
 
 }

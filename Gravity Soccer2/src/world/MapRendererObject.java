@@ -1,7 +1,6 @@
 package world;           // même package que l’interface MapRenderer
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -40,7 +39,7 @@ public class MapRendererObject implements MapRenderer {
     /** Dessine la map avec le SpriteBatch commun au jeu. */
     @Override
     public void render(Control control) {
-        SpriteBatch batch = control.batch;   // déjà configuré avec la caméra
+        SpriteBatch batch = control.batch;  
 
         batch.begin();
         mapSprite.draw(batch);

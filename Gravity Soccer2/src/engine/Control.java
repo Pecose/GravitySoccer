@@ -20,9 +20,11 @@ import entities.world.PhysicsWorld;
 import goal.BlueGoal;
 import goal.RedGoal;
 import players.Ball;
-import players.blueTeam.LeftPlayer;
-import players.redTeam.RightPlayer;
-import players.team.Side;
+import players.country.Bluegladesh;
+import players.country.Redjistan;
+import players.country.Team;
+import players.side.leftTeam.LeftTeam;
+import players.side.rightTeam.RightTeam;
 import score.GameHUD;
 import world.MapRenderer;
 
@@ -30,6 +32,9 @@ public class Control extends ApplicationAdapter {
     public ShapeRenderer renderer;
     public SpriteBatch batch;
     public static FreeCamera camera;
+    public static Team leftTeam = new Redjistan(new LeftTeam());
+    public static Team rightTeam= new Bluegladesh(new RightTeam());
+    
     @SuppressWarnings("unused")
 	private DebugSystem debugSys;
 
@@ -60,74 +65,13 @@ public class Control extends ApplicationAdapter {
         Registry.add(new BottomEdge(-960, 539, 960*2, 1), "BottomEdge");
         Registry.add(new Edges(959, -540, 1, 540*2), "RightEdge");
         
-        int x, y;
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-840 + x,   0 + y,   15, Side.LEFT), "Blue1");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-560 + x, -270 + y, 15, Side.LEFT), "Blue2");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-560 + x,   0 + y,   15, Side.LEFT), "Blue3");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-560 + x,  270 + y, 15, Side.LEFT), "Blue4");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-200 + x, -360 + y, 15, Side.LEFT), "Blue5");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-200 + x,   0 + y,   15, Side.LEFT), "Blue6");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-200 + x,  360 + y, 15, Side.LEFT), "Blue7");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-180 + x, -180 + y, 15, Side.LEFT), "Blue8");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-180 + x,  180 + y, 15, Side.LEFT), "Blue9");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new LeftPlayer(-700 + x,   0 + y,  15, Side.LEFT), "Blue10");
-        
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 840 + x,   0 + y,   15, Side.RIGHT), "Red1");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 560 + x, -270 + y, 15, Side.RIGHT), "Red2");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 560 + x,   0 + y,   15, Side.RIGHT), "Red3");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 560 + x,  270 + y, 15, Side.RIGHT), "Red4");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 200 + x, -360 + y, 15, Side.RIGHT), "Red5");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 200 + x,   0 + y,   15, Side.RIGHT), "Red6");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 200 + x,  360 + y, 15, Side.RIGHT), "Red7");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 180 + x, -180 + y, 15, Side.RIGHT), "Red8");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 180 + x,  180 + y, 15, Side.RIGHT), "Red9");
-        x = (int) ((Math.random() * 20) - 10);
-        y = (int) ((Math.random() * 20) - 10);
-        Registry.add(new RightPlayer( 700 + x,   0 + y,  15, Side.RIGHT), "Red10"); 
-         
         Registry.add(new RedGoal(), "RightGoal");
         Registry.add(new BlueGoal(), "LeftGoal");
-        Registry.add(new Ball( 0,   0, 15), "Ball");
         Registry.add(new GameHUD(), "GameHUD");
-       
+        Registry.add(new Ball( 0,   0, 15), "Ball");
+        
+        Control.leftTeam.resetPlayers();
+        Control.rightTeam.resetPlayers();
 
     }
 
