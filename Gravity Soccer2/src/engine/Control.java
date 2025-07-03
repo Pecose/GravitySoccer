@@ -2,13 +2,12 @@ package engine;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import bumper.Bumper;
-import edges.BottomEdge;
-import edges.DownEdge;
 import edges.Edges;
 import engine.manager.OG;
 import entities.Actor;
@@ -26,6 +25,7 @@ import players.country.Team;
 import players.side.leftTeam.LeftTeam;
 import players.side.rightTeam.RightTeam;
 import score.GameHUD;
+import sound.SoundManager;
 import world.MapRenderer;
 
 public class Control extends ApplicationAdapter {
@@ -34,11 +34,14 @@ public class Control extends ApplicationAdapter {
     public static FreeCamera camera;
     public static Team leftTeam = new Redjistan(new LeftTeam());
     public static Team rightTeam= new Bluegladesh(new RightTeam());
-    
+    public static SoundManager soundManager = new SoundManager("src/music/sf2/Super_Mario.sf2");
     @SuppressWarnings("unused")
 	private DebugSystem debugSys;
 
     private MapRenderer mapRenderer;
+    
+    
+
     
     @Override
     public void create() {
@@ -52,17 +55,17 @@ public class Control extends ApplicationAdapter {
         PhysicsWorld.getWorld().setContactListener(new CollisionManager());
         debugSys = new DebugSystem(PhysicsWorld.getWorld(), FreeCamera.camera, PhysicsWorld.PPM);
 
-        Registry.add(new Bumper(-10, -540, 10, -540, 0, -530), "Bumper1");
-        Registry.add(new Bumper(-10, 540, 10, 540, 0, 530), "Bumper2");
+//        Registry.add(new Bumper(-10, -540, 10, -540, 0, -530), "Bumper1");
+//        Registry.add(new Bumper(-10, 540, 10, 540, 0, 530), "Bumper2");
         
         Registry.add(new Bumper(-960, -540, -960, -520, -940, -540), "Bumper3");
         Registry.add(new Bumper(960, -540, 960, -520, 940, -540), "Bumper4");
         Registry.add(new Bumper(-960, 540, -960, 520, -940, 540), "Bumper5");
         Registry.add(new Bumper(960, 540, 960, 520, 940, 540), "Bumper6");
         
-        Registry.add(new DownEdge(-960, -540, 960*2, 1), "DownEdge");
+        Registry.add(new Edges(-960, -540, 960*2, 1), "DownEdge");
         Registry.add(new Edges(-960, -540, 1, 540*2), "LeftEdge");
-        Registry.add(new BottomEdge(-960, 539, 960*2, 1), "BottomEdge");
+        Registry.add(new Edges(-960, 539, 960*2, 1), "BottomEdge");
         Registry.add(new Edges(959, -540, 1, 540*2), "RightEdge");
         
         Registry.add(new RedGoal(), "RightGoal");
@@ -73,6 +76,7 @@ public class Control extends ApplicationAdapter {
         Control.leftTeam.resetPlayers();
         Control.rightTeam.resetPlayers();
 
+        soundManager.loadMidi("src/music/midi/Pirates of the Caribbean.mid");
     }
 
     @SuppressWarnings("unused")
@@ -91,14 +95,26 @@ public class Control extends ApplicationAdapter {
         PhysicsWorld.getWorld().step(dt, 6, 2);
 //        debugSys.render(); // debug !!!!!!
         Registry.getMap().forEach((key, character) -> {
+        	this.renderer.begin(ShapeRenderer.ShapeType.Filled);
         	((Entity)character).render(this);
+        	this.renderer.end();
         });
         
+        Registry.getMap().forEach((key, character) -> {
+        	this.batch.begin();
+        	((Entity)character).batch(this);
+        	this.batch.end();
+        });
+        
+        if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
+        	soundManager.playNextNote();
+        }
     }
 
 
     @Override
     public void dispose() {
+    	soundManager.dispose();
     	renderer.dispose();
         batch.dispose();
         Gdx.app.exit();

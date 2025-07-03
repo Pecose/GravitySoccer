@@ -1,7 +1,6 @@
 package goal;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import engine.Control;
 import entities.Entity;
@@ -24,10 +23,13 @@ public class GoalNet extends Entity {
 			behavior.update(control, this);
 		}
     	
-    	control.renderer.begin(ShapeRenderer.ShapeType.Filled);
+    	
     	control.renderer.setColor(color);
     	control.renderer.rect(getPosX(), getPosY(), super.getWidth(), super.getHeight());
-    	control.renderer.end();
+    	
     }
+
+	@Override
+	public void batch(Control control) {}
 
 }

@@ -1,7 +1,6 @@
 package players.side.rightTeam;
 
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import engine.Control;
 import entities.behavior.gravity.GravityBehavior;
@@ -18,20 +17,17 @@ public class RightPlayer extends Player {
         this.addBehavior(GravityBehavior.class, new RedGravityBehavior());
         this.addBehavior(VelocityLimitBehavior.class, new DefVelocityLimitBehavior());
     }
-
+    
+    @Override
     public void render(Control control) {
     	super.render(control);
         
-    	control.renderer.begin(ShapeRenderer.ShapeType.Filled);
-    	
         control.renderer.setColor(Color.RED);
         control.renderer.circle(this.getPosX(), this.getPosY(), this.getSize());
-        
-        control.renderer.end();
-        
-        control.batch.begin();
-    	control.batch.draw( shadowTexture, this.getPosX() - this.getSize()-1, this.getPosY() - this.getSize()-1 );
-    	control.batch.end();
     }
 
+    @Override
+    public void batch(Control control) {
+    	control.batch.draw( shadowTexture, this.getPosX() - this.getSize()-1, this.getPosY() - this.getSize()-1 );
+    }
 }

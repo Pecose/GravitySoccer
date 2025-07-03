@@ -33,5 +33,8 @@ public class Player extends Entity{
 	public SideTeam getSide() {
 		return this.team;
 	}
+	
+	@Override
+	public void batch(Control control) {}
 
 }

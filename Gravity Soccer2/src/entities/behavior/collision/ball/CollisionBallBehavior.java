@@ -15,28 +15,37 @@ public class CollisionBallBehavior implements Behavior {
 
     @Override
     public void update(Control control, Entity entity) {
-    	if (initialized) return;
-        // 1) Récupérer le Body créé en Entity
+    	if (!initialized) this.init(entity);
+    }
+    
+    private void init(Entity entity) {
+    	// 1) Récupérer le Body créé en Entity
         Body body = entity.getBody();
         if (body == null) return;
 
         // 2) Initialiser la fixture (une fois)
         CircleShape shape = new CircleShape();
-        // radius stocké en pixels → convertir en mètres
         shape.setRadius(entity.getSize() / PhysicsWorld.PPM);
 
         FixtureDef fd = new FixtureDef();
         fd.shape = shape;
         fd.density     = 5f;
-        fd.restitution = 0.9f;
+        fd.restitution = 1f;
         fd.friction    = 0f;
         
         fd.filter.categoryBits = CollisionBits.CATEGORY_BALL;
-        fd.filter.maskBits = -1; 
-
+        fd.filter.maskBits = 
+        		CollisionBits.CATEGORY_GOALZONE|
+        		CollisionBits.CATEGORY_BUMPER |
+        		CollisionBits.CATEGORY_EDGES |
+        		CollisionBits.CATEGORY_PLAYER;
+        
         body.createFixture(fd);
         shape.dispose();
         initialized = true;
-
+    }
+    
+    public void resetInitializedFlag() {
+        this.initialized = false;
     }
 }

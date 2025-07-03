@@ -4,7 +4,6 @@ import org.lwjgl.opengl.GL20;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import engine.Control;
 import entities.Entity;
@@ -41,17 +40,18 @@ public class GoalZone extends Entity {
 			behavior.update(control, this);
 		}
     	
-    	Gdx.gl.glEnable(GL20.GL_BLEND);
-    	ShapeRenderer shapeRenderer = control.renderer;
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Filled);
+        Gdx.gl.glEnable(GL20.GL_BLEND);
         if (visible) {
-        	shapeRenderer.setColor(visibleColor);
+        	control.renderer.setColor(visibleColor);
         } else {
-        	shapeRenderer.setColor(notVisibleColor);
+        	control.renderer.setColor(notVisibleColor);
         }
-        shapeRenderer.rect(super.getPosX(), super.getPosY(), super.getWidth(), super.getHeight());
-        shapeRenderer.end();
+        control.renderer.rect(super.getPosX(), super.getPosY(), super.getWidth(), super.getHeight());
     	
     }
+
+	@Override
+	public void batch(Control control) {}
+    
 }
 

@@ -24,5 +24,9 @@ public class FreeCameraObject extends Entity implements FreeCamera{
 			behavior.update(control, this);
 		}
 	}
+
+	@Override
+	public void batch(Control control) {
+	}
     
 }

@@ -4,6 +4,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import entities.world.PhysicsWorld;
+
 public class Registry {
     private static final Map<String, Entity> registry = new HashMap<>();
 
@@ -25,5 +27,14 @@ public class Registry {
     
     public static Map<String, Entity> getMap() {
         return registry;
+    }
+
+    public static void remove(String key) {
+        Entity old = registry.remove(key);
+        if (old != null) {
+            if (old.getBody() != null) {
+                PhysicsWorld.getWorld().destroyBody(old.getBody());
+            }
+        }
     }
 }

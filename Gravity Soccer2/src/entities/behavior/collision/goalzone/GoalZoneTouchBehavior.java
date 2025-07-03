@@ -2,6 +2,7 @@ package entities.behavior.collision.goalzone;
 
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.Fixture;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 
@@ -16,29 +17,32 @@ public class GoalZoneTouchBehavior implements GoalZoneBehavior {
 
     @Override
     public void update(Control control, Entity entity) {
-        if (initialized) return;
+    	if (initialized) return;
         Body body = entity.getBody();
         if (body == null) return;
 
-        float wPx = entity.getWidth()  - MARGIN_PX;
-        float hPx = entity.getHeight() - MARGIN_PX;
+        // Supprime toute fixture existante pour éviter doublons
+        for (Fixture f : body.getFixtureList()) {
+            body.destroyFixture(f);
+        }
 
+        // Dimensions ajustées
+        float wPx = entity.getWidth() - MARGIN_PX;
+        float hPx = entity.getHeight() - MARGIN_PX;
         float halfW = (wPx / 2f) / PhysicsWorld.PPM;
         float halfH = (hPx / 2f) / PhysicsWorld.PPM;
 
+        // Shape et fixture capteur
         PolygonShape shape = new PolygonShape();
         Vector2 center = new Vector2(halfW + 0.02f, halfH + 0.04f);
         shape.setAsBox(halfW, halfH, center, 0f);
 
         FixtureDef fd = new FixtureDef();
-        fd.shape          = shape;
-        fd.density        = 0f;     // static
-        fd.restitution    = 0.6f;   // rebond “classique”
-        fd.friction       = 0f;
-        fd.filter.categoryBits = CollisionBits.CATEGORY_GOALZONE;
-        fd.filter.maskBits     = CollisionBits.CATEGORY_BALL;
+        fd.shape       = shape;
+        fd.isSensor    = false;
 
-        body.createFixture(fd);
+        Fixture fixture = body.createFixture(fd);
+        fixture.setUserData(entity);
         shape.dispose();
 
         initialized = true;
@@ -46,6 +50,6 @@ public class GoalZoneTouchBehavior implements GoalZoneBehavior {
 
     @Override
     public void onCollision(Entity self, Entity other) {
-        // rien à faire ici pour le touch
+        // Pas d'action spécifique pour le touch
     }
 }

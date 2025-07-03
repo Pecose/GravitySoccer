@@ -1,7 +1,5 @@
 package bumper;
 
-import com.badlogic.gdx.graphics.Color;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
@@ -22,12 +20,15 @@ public class Bumper extends Entity {
             behavior.update(control, this);
         }
 
-        control.renderer.begin(ShapeRenderer.ShapeType.Line);
-
-        control.renderer.setColor(Color.YELLOW);
-
-        control.renderer.triangle(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.getX3(), this.getY3());
-
-        control.renderer.end();
+//        control.renderer.begin(ShapeRenderer.ShapeType.Line);
+//        control.renderer.setColor(Color.YELLOW);
+//        control.renderer.triangle(this.getX1(), this.getY1(), this.getX2(), this.getY2(), this.getX3(), this.getY3());
+//        control.renderer.end();
     }
+
+	@Override
+	public void batch(Control control) {
+		// TODO Auto-generated method stub
+		
+	}
 }

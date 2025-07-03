@@ -11,7 +11,7 @@ public class GameTimer {
     public static float time = 90f;
 
 
-    public void render(Control control) {
+    public void time(Control control) {
         time -= Gdx.graphics.getDeltaTime();
     }
     

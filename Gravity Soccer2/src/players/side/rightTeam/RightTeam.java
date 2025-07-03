@@ -5,8 +5,11 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
+import com.badlogic.gdx.math.Vector2;
+
 import engine.Control;
 import entities.Registry;
+import players.Player;
 import players.side.SideTeam;
 
 public class RightTeam implements SideTeam{
@@ -42,8 +45,29 @@ public class RightTeam implements SideTeam{
     }
 
     private void addRandomizedPlayer(int baseX, int baseY, String name) {
+    	Registry.remove(name);
         int x = baseX + random.nextInt(21) - 10;  // de -10 à +10
         int y = baseY + random.nextInt(21) - 10;
         Registry.add(new RightPlayer(x, y, 15, this), name);
+    }
+    
+    @Override
+    public Player getNearestPlayer(Vector2 position) {
+        Player closest = null;
+        float bestDist2 = Float.MAX_VALUE;
+
+        // Parcours tous les joueurs de l'équipe via leur noms
+        for (String name : NAMES) {
+            Player p = (Player) Registry.get(name);
+            if (p == null || p.getBody() == null) continue;
+
+            Vector2 pPos = p.getBody().getPosition();
+            float dist2 = position.dst2(pPos);
+            if (dist2 < bestDist2) {
+                bestDist2 = dist2;
+                closest = p;
+            }
+        }
+        return closest;
     }
 }

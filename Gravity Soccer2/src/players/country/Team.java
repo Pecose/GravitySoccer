@@ -1,8 +1,10 @@
 package players.country;
 
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.math.Vector2;
 
 import engine.Control;
+import players.Player;
 import players.side.SideTeam;
 
 public class Team {
@@ -33,5 +35,7 @@ public class Team {
 		sideTeam.resetPlayers();
 	}
 	
-	
+	public Player getNearestPlayer(Vector2 position) {
+		return sideTeam.getNearestPlayer(position);
+	}
 }

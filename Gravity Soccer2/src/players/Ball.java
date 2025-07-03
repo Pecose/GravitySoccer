@@ -3,16 +3,11 @@ package players;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
-import entities.behavior.ball.BallLastTouchedBehavior;
-import entities.behavior.collision.ball.BallTouchBumperBehavior;
-import entities.behavior.collision.ball.BallTouchEdgesBehavior;
-import entities.behavior.collision.ball.BallTouchGoalZoneBehavior;
-import entities.behavior.collision.ball.BallTouchPlayerBehavior;
+import entities.behavior.collision.ball.BallLastTouchedBehavior;
 import entities.behavior.collision.ball.CollisionBallBehavior;
 import players.side.SideTeam;
 
@@ -26,11 +21,7 @@ public class Ball extends Entity{
         super(x, y, radius);
         
         this.addBehavior(CollisionBallBehavior.class, new CollisionBallBehavior());
-        this.addBehavior(BallTouchPlayerBehavior.class, new BallTouchPlayerBehavior());
-        this.addBehavior(BallTouchEdgesBehavior.class, new BallTouchEdgesBehavior());
-        this.addBehavior(BallTouchBumperBehavior.class, new BallTouchBumperBehavior());
         this.addBehavior(BallLastTouchedBehavior.class, new BallLastTouchedBehavior());
-        this.addBehavior(BallTouchGoalZoneBehavior.class, new BallTouchGoalZoneBehavior());
         
         if (shadowTexture == null) {
             shadowTexture = new Texture(Gdx.files.internal("shadowBall.png"));
@@ -43,17 +34,15 @@ public class Ball extends Entity{
 			behavior.update(control, this);
 		}
 		
-		control.renderer.begin(ShapeRenderer.ShapeType.Filled);
-    	
         control.renderer.setColor(color);
         control.renderer.circle(this.getPosX(), this.getPosY(), this.getSize());
         
-        control.renderer.end();
-        
-        control.batch.begin();
-    	control.batch.draw( shadowTexture, this.getPosX() - this.getSize()-1, this.getPosY() - this.getSize()-1);
-    	control.batch.end();
 	}
+	
+	@Override
+    public void batch(Control control) {
+    	control.batch.draw( shadowTexture, this.getPosX() - this.getSize()-1, this.getPosY() - this.getSize()-1 );
+    }
 
 	public SideTeam getLastTeamTouched() {
 		return lastTeamTouched;
@@ -70,5 +59,6 @@ public class Ball extends Entity{
 	public void setColor(Color color) {
 		this.color = color;
 	}
+
 
 }

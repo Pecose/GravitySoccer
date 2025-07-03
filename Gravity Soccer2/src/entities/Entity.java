@@ -90,7 +90,6 @@ public abstract class Entity implements Actor{
         this.setBody(body);
     }
 
-
 	public void onCollision(Entity other) {
         for (Behavior b : getBehaviors()) {
             if (b instanceof CollisionReactive) {
@@ -111,15 +110,9 @@ public abstract class Entity implements Actor{
         return body.getPosition().y * PhysicsWorld.PPM;
     }
 
-    /** Ne sert plus : on ne stocke plus de position séparée. */
     @Override
-    public Actor setPosX(float x) {
-        // inutile ou tu peux teleporter directement via body.setTransform(x/PPM,…)
-        return this;
-    }
-    @Override
-    public Actor setPosY(float y) {
-        return this;
+    public Vector2 getPos() {
+        return new Vector2(this.getPosX(), this.getPosY());
     }
     
     public float getSize() {
@@ -173,6 +166,10 @@ public abstract class Entity implements Actor{
 
 	public void setPosition(Vector2 position) {
 		this.getBody().getPosition().set(position);
+	}
+	
+	public void setPosition(int x, int y) {
+		this.getBody().getPosition().set(new Vector2(0, 0));
 	}
 
 	public void setVelocity(Vector2 linearVelocity) {

@@ -62,5 +62,11 @@ public class RedGoal extends Entity {
         filetGauche.render(control);
         filetDroit.render(control);
     }
+
+	@Override
+	public void batch(Control control) {
+		// TODO Auto-generated method stub
+		
+	}
 }
 

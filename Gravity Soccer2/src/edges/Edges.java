@@ -21,5 +21,11 @@ public class Edges extends Entity{
 		}
 	}
 
+	@Override
+	public void batch(Control control) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }
 
