@@ -19,7 +19,7 @@ public class Player extends Entity{
         this.team = team;
         this.addBehavior(CollisionBodyBehavior.class, new CollisionBodyBehavior());
         if (shadowTexture == null) {
-            shadowTexture = new Texture(Gdx.files.internal("shadow.png"));
+            shadowTexture = new Texture(Gdx.files.internal("images/shadow.png"));
         }
     }
 

@@ -3,18 +3,21 @@ package engine;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.video.VideoPlayer;
+import com.badlogic.gdx.video.VideoPlayerCreator;
 
 import bumper.Bumper;
 import edges.Edges;
-import engine.manager.OG;
 import entities.Actor;
 import entities.Entity;
 import entities.Registry;
 import entities.behavior.collision.bodys.CollisionManager;
 import entities.cameras.FreeCamera;
+import entities.cameras.FreeCameraObject;
 import entities.world.PhysicsWorld;
 import goal.BlueGoal;
 import goal.RedGoal;
@@ -27,6 +30,7 @@ import players.side.rightTeam.RightTeam;
 import score.GameHUD;
 import sound.SoundManager;
 import world.MapRenderer;
+import world.MapRendererObject;
 
 public class Control extends ApplicationAdapter {
     public ShapeRenderer renderer;
@@ -35,6 +39,8 @@ public class Control extends ApplicationAdapter {
     public static Team leftTeam = new Redjistan(new LeftTeam());
     public static Team rightTeam= new Bluegladesh(new RightTeam());
     public static SoundManager soundManager = new SoundManager("src/music/sf2/Super_Mario.sf2");
+    public static VideoPlayer player;
+    
     @SuppressWarnings("unused")
 	private DebugSystem debugSys;
 
@@ -48,9 +54,9 @@ public class Control extends ApplicationAdapter {
     	renderer = new ShapeRenderer();
         batch = new SpriteBatch();
         
-        camera = OG.get().newFreeCamera();
+        camera = new FreeCameraObject();
         FreeCamera.getCamera().position.set(0, 0, 0);
-        mapRenderer = OG.get().newMapRenderer();
+        mapRenderer = new MapRendererObject();
 
         PhysicsWorld.getWorld().setContactListener(new CollisionManager());
         debugSys = new DebugSystem(PhysicsWorld.getWorld(), FreeCamera.camera, PhysicsWorld.PPM);
@@ -76,7 +82,14 @@ public class Control extends ApplicationAdapter {
         Control.leftTeam.resetPlayers();
         Control.rightTeam.resetPlayers();
 
-        soundManager.loadMidi("src/music/midi/Pirates of the Caribbean.mid");
+        soundManager.loadMidi("src/music/midi/Guile.mid");
+        
+        try {
+        	player = VideoPlayerCreator.createVideoPlayer();
+        	FileHandle file = Gdx.files.internal("images/goal.webm");
+        	player.load(file);
+        	player.play();
+		} catch (Exception e) { e.printStackTrace(); }
     }
 
     @SuppressWarnings("unused")
@@ -94,21 +107,31 @@ public class Control extends ApplicationAdapter {
         float dt = Gdx.graphics.getDeltaTime();
         PhysicsWorld.getWorld().step(dt, 6, 2);
 //        debugSys.render(); // debug !!!!!!
+        
+        this.renderer.begin(ShapeRenderer.ShapeType.Filled);
         Registry.getMap().forEach((key, character) -> {
-        	this.renderer.begin(ShapeRenderer.ShapeType.Filled);
         	((Entity)character).render(this);
-        	this.renderer.end();
+        });
+        this.renderer.end();
+        
+        player.update(); 
+        
+        this.batch.begin();
+        Registry.getMap().forEach((key, character) -> {
+        	((Entity)character).batch(this);
         });
         
-        Registry.getMap().forEach((key, character) -> {
-        	this.batch.begin();
-        	((Entity)character).batch(this);
-        	this.batch.end();
-        });
+//        Gdx.gl.glEnable(GL20.GL_BLEND);
+//        batch.setBlendFunction(GL20.GL_SRC_ALPHA, GL20.GL_ONE_MINUS_SRC_ALPHA);
+//        batch.draw(player.getTexture(), 0, 0);
+        this.batch.end();
+        Gdx.gl.glDisable(GL20.GL_BLEND);
         
         if (Gdx.input.isKeyJustPressed(Input.Keys.ENTER)) {
         	soundManager.playNextNote();
         }
+        
+        
     }
 
 

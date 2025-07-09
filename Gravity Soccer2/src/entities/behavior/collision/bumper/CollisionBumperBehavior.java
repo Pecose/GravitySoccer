@@ -1,15 +1,19 @@
 package entities.behavior.collision.bumper;
 
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.physics.box2d.*;
+import com.badlogic.gdx.physics.box2d.Body;
+import com.badlogic.gdx.physics.box2d.FixtureDef;
+import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
 import entities.behavior.collision.bodys.CollisionBits;
+import entities.behavior.collision.bodys.CollisionReactive;
 import entities.world.PhysicsWorld;
+import players.Ball;
 
-public class CollisionBumperBehavior implements Behavior {
+public class CollisionBumperBehavior implements Behavior, CollisionReactive {
     private boolean initialized = false;
 
     @Override
@@ -63,5 +67,31 @@ public class CollisionBumperBehavior implements Behavior {
 
         initialized = true;
 
+    }
+    @Override
+    public void onCollision(Entity self, Entity other) {
+        if (!(other instanceof Ball)) return;
+
+        Body ballBody = other.getBody();
+        if (ballBody == null) return;
+
+        // 1) trouve la position de la balle et du centre
+        Vector2 ballPos  = ballBody.getPosition(); // en mètres
+        Vector2 center   = new Vector2(0, 0);
+
+        // 2) direction normalisée vers le centre
+        Vector2 dir = center.cpy().sub(ballPos).nor();
+
+        // 3) magnitude de la vitesse (tu peux fixer une valeur ou t'appuyer  
+        //    sur l'ancien module de restitution pour la garder dynamique)
+        float speed = 10f; 
+        // ou float speed = ballBody.getLinearVelocity().len();
+
+        // 4) applique la nouvelle vitesse
+        ballBody.setLinearVelocity(dir.scl(speed));
+
+        // Si tu préfères un coup (impulse) plutôt qu'une vitesse figée :
+        // float impulseMag = ballBody.getMass() * speed;
+        // ballBody.applyLinearImpulse(dir.scl(impulseMag), ballBody.getWorldCenter(), true);
     }
 }

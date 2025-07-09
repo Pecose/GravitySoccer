@@ -10,7 +10,7 @@ import entities.cameras.FreeCamera;
  
  public class GameHUD extends Entity{
  
-     Texture hudTexture = new Texture(Gdx.files.internal("hud.png"));
+     Texture hudTexture = new Texture(Gdx.files.internal("images/hud.png"));
      
      public GameHUD() {
  

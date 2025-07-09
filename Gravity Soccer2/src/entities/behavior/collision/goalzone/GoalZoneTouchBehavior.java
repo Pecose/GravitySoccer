@@ -8,8 +8,8 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 
 import engine.Control;
 import entities.Entity;
-import entities.behavior.collision.bodys.CollisionBits;
 import entities.world.PhysicsWorld;
+import players.Ball;
 
 public class GoalZoneTouchBehavior implements GoalZoneBehavior {
     private boolean initialized = false;
@@ -50,6 +50,7 @@ public class GoalZoneTouchBehavior implements GoalZoneBehavior {
 
     @Override
     public void onCollision(Entity self, Entity other) {
-        // Pas d'action spécifique pour le touch
+    	if (other instanceof Ball) Control.soundManager.playNextNote();
+    	
     }
 }

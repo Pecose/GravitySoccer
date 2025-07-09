@@ -24,7 +24,7 @@ public class BallLastTouchedBehavior implements Behavior, CollisionReactive {
 
     @Override
     public void onCollision(Entity self, Entity other) {
-    	Control.soundManager.playNextNote();
+    	if (!(other instanceof GoalZone)) Control.soundManager.playNextNote();
     	
         if (!(other instanceof Player)) return;
 

@@ -17,7 +17,7 @@ public class MapRendererObject implements MapRenderer {
 
     public MapRendererObject() {
         // charge la texture (PNG, JPG, etc.) depuis assets/
-        mapTex = new Texture(Gdx.files.internal("map.png"));   // ou "images/map.png"
+        mapTex = new Texture(Gdx.files.internal("images/map.png"));  
         mapTex.setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
 
         // crée un sprite pour simplifier l'affichage

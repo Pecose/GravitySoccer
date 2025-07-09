@@ -9,6 +9,7 @@ import entities.Entity;
 import entities.behavior.Behavior;
 import entities.behavior.collision.ball.BallLastTouchedBehavior;
 import entities.behavior.collision.ball.CollisionBallBehavior;
+import entities.behavior.flame.FlameTrailBehavior;
 import players.side.SideTeam;
 
 public class Ball extends Entity{
@@ -22,9 +23,10 @@ public class Ball extends Entity{
         
         this.addBehavior(CollisionBallBehavior.class, new CollisionBallBehavior());
         this.addBehavior(BallLastTouchedBehavior.class, new BallLastTouchedBehavior());
+        this.addBehavior(FlameTrailBehavior.class, new FlameTrailBehavior());
         
         if (shadowTexture == null) {
-            shadowTexture = new Texture(Gdx.files.internal("shadowBall.png"));
+            shadowTexture = new Texture(Gdx.files.internal("images/shadowBall.png"));
         }
     }
 

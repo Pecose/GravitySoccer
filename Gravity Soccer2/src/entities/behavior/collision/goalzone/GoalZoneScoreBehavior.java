@@ -14,7 +14,6 @@ import players.Ball;
 import players.side.SideTeam;
 import players.side.leftTeam.LeftTeam;
 import players.side.rightTeam.RightTeam;
-import score.GameScore;
 import score.GoalManager;
 
 public class GoalZoneScoreBehavior implements GoalZoneBehavior {
