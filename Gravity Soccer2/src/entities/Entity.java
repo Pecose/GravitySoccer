@@ -155,7 +155,7 @@ public abstract class Entity implements Actor{
     }
 	
 	@Override
-    public Collection<Behavior>  getBehaviors() {
+    public Collection<Behavior> getBehaviors() {
         return behaviors.values();
     }
 	
@@ -223,6 +223,10 @@ public abstract class Entity implements Actor{
 	public void setY3(int y3) {
 		this.y3 = y3;
 	}
-;
+
+	@Override
+	public void dispose() {
+		
+	}
 
 }

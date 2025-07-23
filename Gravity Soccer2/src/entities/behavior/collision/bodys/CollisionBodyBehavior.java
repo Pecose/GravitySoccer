@@ -13,7 +13,7 @@ public class CollisionBodyBehavior implements Behavior, CollisionReactive {
     private boolean initialized = false;
 
     @Override
-    public void update(Control control, Entity entity) {
+    public void render(Control control, Entity entity) {
         if (initialized) return;
         Body body = entity.getBody();
         if (body == null) return;
@@ -53,5 +53,11 @@ public class CollisionBodyBehavior implements Behavior, CollisionReactive {
 
 	@Override
 	public void onCollision(Entity self, Entity other) {
+	}
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
 	}
 }

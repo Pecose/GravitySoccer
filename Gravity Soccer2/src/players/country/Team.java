@@ -3,19 +3,19 @@ package players.country;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.math.Vector2;
 
-import engine.Control;
 import players.Player;
 import players.side.SideTeam;
 
 public class Team {
 
-	private String name = "";
+	private String name = ""; 
 	private Color color = null;
 	private SideTeam sideTeam = null;
 	
 	public Team(String name, Color color, SideTeam sideTeam) {
 		this.name = name;
 		this.color = color;
+		
 		this.sideTeam = sideTeam;
 	}
 	
@@ -24,7 +24,7 @@ public class Team {
 	}
 	
 	public Color getColor() {
-		return color;
+		return this.color;
 	}
 	
 	public SideTeam getSideTeam() {
@@ -32,7 +32,7 @@ public class Team {
 	}
 	
 	public void resetPlayers() {
-		sideTeam.resetPlayers();
+		sideTeam.resetPlayers(this, sideTeam);
 	}
 	
 	public Player getNearestPlayer(Vector2 position) {

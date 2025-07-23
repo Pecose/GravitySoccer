@@ -26,6 +26,7 @@ public interface Actor {
 	public <T extends Behavior> void removeBehavior(Class<T> categoryType);
 
 	Vector2 getPos();
+	void dispose();
 
 	
 

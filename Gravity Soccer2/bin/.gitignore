@@ -1,3 +1,9 @@
-/engine/
-/entities/
+/goal/
+/shaders/
 /players/
+/entities/
+/bumper/
+/edges/
+/score/
+/engine/
+/images/

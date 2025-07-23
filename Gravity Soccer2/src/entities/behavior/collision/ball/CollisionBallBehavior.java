@@ -14,7 +14,7 @@ public class CollisionBallBehavior implements Behavior {
     private boolean initialized = false;
 
     @Override
-    public void update(Control control, Entity entity) {
+    public void render(Control control, Entity entity) {
     	if (!initialized) this.init(entity);
     }
     
@@ -48,4 +48,10 @@ public class CollisionBallBehavior implements Behavior {
     public void resetInitializedFlag() {
         this.initialized = false;
     }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

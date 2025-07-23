@@ -12,7 +12,7 @@ public class AttVelocityLimitBehavior implements VelocityLimitBehavior {
     private static final float MAX_SPEED_PX = 600f;
 
     @Override
-    public void update(Control control, Entity entity) {
+    public void render(Control control, Entity entity) {
         Body body = entity.getBody();
         if (body == null) return;
 
@@ -28,4 +28,10 @@ public class AttVelocityLimitBehavior implements VelocityLimitBehavior {
             body.setLinearVelocity(velM);
         }
     }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

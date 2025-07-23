@@ -2,7 +2,6 @@ package entities.behavior.flame;
 
 import java.util.Random;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.math.Vector2;
 
 import engine.Control;
@@ -11,53 +10,90 @@ import entities.Registry;
 import entities.behavior.Behavior;
 import entities.world.PhysicsWorld;
 
+/**
+ * Trace un sillage de flammes sans espaces, même à grande vitesse,
+ * en interpolant selon la distance parcourue et un seuil de vitesse.
+ */
 public class FlameTrailBehavior implements Behavior {
- private static final float SEG_LEN    = 20f;    // longueur initiale
- private static final float SEG_WID    = 6f;     // épaisseur
- private static final float SEG_LIFE   = 0.5f;   // en secondes
- private static final float MIN_SPEED  = 500f;   // px/s pour émettre
- private static final float INTERVALE  = 0.005f;  // sec entre deux emits
+    private static final float SEG_LEN     = 20f;   // longueur du segment
+    private static final float SEG_WID     = 6f;    // épaisseur (et espacement cible)
+    private static final float SEG_LIFE    = 0.5f;  // durée de vie en secondes
+    private static final float MIN_SPEED   = 500f;   // vitesse minimale pour émettre
 
- private float accumulator = 0f;
- private int   counter     = 0;
- private Random rand       = new Random();
+    // dernière position connue pour interpolation
+    private Vector2 lastPos = null;
+    private int     counter = 0;
+    private Random  rand    = new Random();
 
- @Override
- public void update(Control control, Entity entity) {
-     float delta = Gdx.graphics.getDeltaTime();
-     accumulator += delta;
+    @Override
+    public void render(Control control, Entity entity) {
+        // position actuelle
+        Vector2 currentPos = new Vector2(entity.getPosX(), entity.getPosY());
+        if (lastPos == null) {
+            lastPos = currentPos.cpy();
+            return;
+        }
 
-     // vitesse en px/s
-     float speed = entity.getBody().getLinearVelocity().len() * PhysicsWorld.PPM;
-     if (speed < MIN_SPEED || accumulator < INTERVALE) return;
+        // calcul de la vitesse en px/s
+        Vector2 vel = entity.getBody().getLinearVelocity();
+        float speed = vel.len() * PhysicsWorld.PPM;
+        if (speed < MIN_SPEED) {
+            // si trop lent, on ne trace rien et on remet à jour la position de référence
+            lastPos = currentPos.cpy();
+            return;
+        }
 
-     accumulator = 0f;
+        // vecteur déplacement depuis la dernière frame
+        Vector2 movement = currentPos.cpy().sub(lastPos);
+        float dist = movement.len();
+        if (dist < SEG_WID) {
+            // pas assez bougé pour générer un segment complet
+            return;
+        }
 
-     // calcul de l'angle de la vélocité
-     Vector2 vel = entity.getBody().getLinearVelocity();
-     float ang   = (float)Math.atan2(vel.y, vel.x);
+        // direction normalisée du déplacement
+        Vector2 dir = movement.cpy().nor();
+        // nombre de segments nécessaires pour combler les blancs
+        int count = (int) Math.floor(dist / SEG_WID);
 
-     // rotation du segment perpendiculaire à la trajectoire
-     float rot   = ang + ((rand.nextBoolean() ? 1 : -1) * ((float)Math.PI / 2f));
+        // générer chaque segment le long du vecteur de déplacement
+        for (int i = 1; i <= count; i++) {
+            Vector2 pos = lastPos.cpy().add(dir.cpy().scl(i * SEG_WID));
+            emitSegmentAt(entity, pos, dir);
+        }
 
-     // position du segment (juste derrière la balle)
-     float bx = entity.getPosX(), by = entity.getPosY();
-     Vector2 back = vel.cpy().nor().scl(-entity.getSize()*0.6f);
-     Vector2 perp = new Vector2((float)Math.cos(rot), (float)Math.sin(rot))
-                       .scl((rand.nextFloat()-0.5f)*SEG_WID*1.5f);
+        // mise à jour de la dernière position de référence
+        lastPos.add(dir.scl(count * SEG_WID));
+    }
 
-     Vector2 pos = new Vector2(bx, by).add(back).add(perp);
+    /**
+     * Crée un segment de flamme à une position précise et avec l'orientation.
+     */
+    private void emitSegmentAt(Entity entity, Vector2 pos, Vector2 dir) {
+        // angle et rotation perpendiculaire aléatoire
+        float ang = (float) Math.atan2(dir.y, dir.x);
+        float rot = (float) (ang + ((rand.nextBoolean() ? 1 : -1) * (Math.PI / 2f)));
 
-     // crée une clé unique pour le Registry
-     String key = "FlameSeg_" + System.currentTimeMillis() + "_" + (counter++);
+        // décalage aléatoire perpendiculaire pour l'effet organique
+        Vector2 perp = new Vector2((float) Math.cos(rot), (float) Math.sin(rot))
+                             .scl((rand.nextFloat() - 0.5f) * SEG_WID * 1.5f);
+        Vector2 spawn = pos.cpy().add(perp);
 
-     // instancie et enregistre le segment
-     FlameTrailSegment seg = new FlameTrailSegment(
-         key,
-         pos.x, pos.y,
-         SEG_LEN, SEG_WID,
-         rot, SEG_LIFE
-     );
-     Registry.add(seg, key);
- }
+        // création et enregistrement du segment
+        String key = "FlameSeg_" + System.currentTimeMillis() + "_" + (counter++);
+        FlameTrailSegment seg = new FlameTrailSegment(
+            key,
+            spawn.x, spawn.y,
+            SEG_LEN, SEG_WID,
+            rot,
+            SEG_LIFE
+        );
+        Registry.add(seg, key);
+    }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -20,7 +20,7 @@ public class GoalNet extends Entity {
     public void render(Control control) {
     	
     	for(Behavior behavior : this.getBehaviors()) {
-			behavior.update(control, this);
+			behavior.render(control, this);
 		}
     	
     	
@@ -31,5 +31,11 @@ public class GoalNet extends Entity {
 
 	@Override
 	public void batch(Control control) {}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

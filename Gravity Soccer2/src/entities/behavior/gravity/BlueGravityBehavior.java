@@ -11,7 +11,7 @@ public class BlueGravityBehavior implements CollisionReactive, GravityBehavior {
     private static RedGravityBehavior redGravityBehavior = new RedGravityBehavior();
     
     @Override
-    public void update(Control control, Entity entity) {
+    public void render(Control control, Entity entity) {
         Body body = entity.getBody();    // le Body unique, créé dans Entity
         if (body == null) return;
 
@@ -25,4 +25,10 @@ public class BlueGravityBehavior implements CollisionReactive, GravityBehavior {
     public void onCollision(Entity self, Entity other) {
     	self.addBehavior(GravityBehavior.class, redGravityBehavior);
     }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

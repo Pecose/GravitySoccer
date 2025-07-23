@@ -21,7 +21,7 @@ public class CollisionEdgeBehavior implements Behavior, CollisionReactive {
     private boolean initialized = false;
 
     @Override
-    public void update(Control control, Entity entity) {
+    public void render(Control control, Entity entity) {
         if (initialized) return;
         Body body = entity.getBody();
         if (body == null) return;
@@ -89,5 +89,11 @@ public class CollisionEdgeBehavior implements Behavior, CollisionReactive {
         // 5) Application d'une vitesse constante
         body.setLinearVelocity(dir.scl(speed));
     }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 
 }

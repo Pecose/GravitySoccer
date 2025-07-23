@@ -19,10 +19,8 @@ import entities.behavior.collision.bodys.CollisionManager;
 import entities.cameras.FreeCamera;
 import entities.cameras.FreeCameraObject;
 import entities.world.PhysicsWorld;
-import goal.BlueGoal;
-import goal.RedGoal;
 import players.Ball;
-import players.country.Bluegladesh;
+import players.country.Orangezanie;
 import players.country.Redjistan;
 import players.country.Team;
 import players.side.leftTeam.LeftTeam;
@@ -36,18 +34,14 @@ public class Control extends ApplicationAdapter {
     public ShapeRenderer renderer;
     public SpriteBatch batch;
     public static FreeCamera camera;
-    public static Team leftTeam = new Redjistan(new LeftTeam());
-    public static Team rightTeam= new Bluegladesh(new RightTeam());
+    public static Team leftTeam = new Orangezanie(new LeftTeam());
+    public static Team rightTeam= new Redjistan(new RightTeam());
     public static SoundManager soundManager = new SoundManager("src/music/sf2/Super_Mario.sf2");
     public static VideoPlayer player;
     
     @SuppressWarnings("unused")
 	private DebugSystem debugSys;
-
     private MapRenderer mapRenderer;
-    
-    
-
     
     @Override
     public void create() {
@@ -74,8 +68,6 @@ public class Control extends ApplicationAdapter {
         Registry.add(new Edges(-960, 539, 960*2, 1), "BottomEdge");
         Registry.add(new Edges(959, -540, 1, 540*2), "RightEdge");
         
-        Registry.add(new RedGoal(), "RightGoal");
-        Registry.add(new BlueGoal(), "LeftGoal");
         Registry.add(new GameHUD(), "GameHUD");
         Registry.add(new Ball( 0,   0, 15), "Ball");
         

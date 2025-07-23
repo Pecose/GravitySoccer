@@ -21,12 +21,18 @@ public class FreeCameraObject extends Entity implements FreeCamera{
 	@Override
 	public void render(Control control) {
 		for(Behavior behavior : this.getBehaviors()) {
-			behavior.update(control, this);
+			behavior.render(control, this);
 		}
 	}
 
 	@Override
 	public void batch(Control control) {
+	}
+
+	@Override
+	public void dispose() {
+		// TODO Auto-generated method stub
+		
 	}
     
 }

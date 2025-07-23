@@ -17,12 +17,18 @@ public class Edges extends Entity{
 	@Override
 	public void render(Control control) {
 		for(Behavior behavior : this.getBehaviors()) {
-			behavior.update(control, this);
+			behavior.render(control, this);
 		}
 	}
 
 	@Override
 	public void batch(Control control) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void dispose() {
 		// TODO Auto-generated method stub
 		
 	}

@@ -5,5 +5,6 @@ import entities.Entity;
 
 public interface Behavior {
 
-	public void update(Control control, Entity entity);
+	public void render(Control control, Entity entity);
+	public void batch(Control control, Entity entity);
 }

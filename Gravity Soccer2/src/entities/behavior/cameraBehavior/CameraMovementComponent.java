@@ -5,7 +5,6 @@ import com.badlogic.gdx.Input;
 
 import engine.Control;
 import entities.Entity;
-import entities.behavior.Behavior;
 import entities.cameras.FreeCamera;
 
 public class CameraMovementComponent implements CameraMovementBehavior {
@@ -13,7 +12,7 @@ public class CameraMovementComponent implements CameraMovementBehavior {
     private float moveSpeed = 1000f;
 
     @Override
-    public void update(Control control, Entity entities) {
+    public void render(Control control, Entity entities) {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         if (Gdx.input.isKeyPressed(Input.Keys.LEFT) || Gdx.input.isKeyPressed(Input.Keys.A)) {
@@ -32,4 +31,10 @@ public class CameraMovementComponent implements CameraMovementBehavior {
 
         FreeCamera.camera.update();
     }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

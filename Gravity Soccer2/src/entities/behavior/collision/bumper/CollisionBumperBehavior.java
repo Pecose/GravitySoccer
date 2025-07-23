@@ -17,7 +17,7 @@ public class CollisionBumperBehavior implements Behavior, CollisionReactive {
     private boolean initialized = false;
 
     @Override
-    public void update(Control control, Entity entity) {
+    public void render(Control control, Entity entity) {
         if (initialized) return;
 
 
@@ -94,4 +94,9 @@ public class CollisionBumperBehavior implements Behavior, CollisionReactive {
         // float impulseMag = ballBody.getMass() * speed;
         // ballBody.applyLinearImpulse(dir.scl(impulseMag), ballBody.getWorldCenter(), true);
     }
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

@@ -8,7 +8,9 @@ import java.util.Random;
 import com.badlogic.gdx.math.Vector2;
 
 import entities.Registry;
+import goal.Goal;
 import players.Player;
+import players.country.Team;
 import players.side.SideTeam;
 
 public class LeftTeam implements SideTeam{
@@ -35,19 +37,20 @@ public class LeftTeam implements SideTeam{
     private final Random random = new Random();
 
     @Override
-    public void resetPlayers() {
+    public void resetPlayers(Team team, SideTeam side) {
         for (int i = 0; i < BASE_POSITIONS.size(); i++) {
             Point base = BASE_POSITIONS.get(i);
             String name = NAMES.get(i);
-            addRandomizedPlayer(base.x, base.y, name);
+            addRandomizedPlayer(base.x, base.y, name, team, side);
         }
+        Registry.add(new Goal(team), "LeftGoal");
     }
 
-    private void addRandomizedPlayer(int baseX, int baseY, String name) {
+    private void addRandomizedPlayer(int baseX, int baseY, String name, Team team, SideTeam side) {
     	Registry.remove(name);
-        int x = baseX + random.nextInt(21) - 10;  // [–10 … +10]
+        int x = baseX + random.nextInt(21) - 10; 
         int y = baseY + random.nextInt(21) - 10;
-        Registry.add(new LeftPlayer(x, y, 15, this), name);
+        Registry.add(new LeftPlayer(x, y, name.substring(4), team, side), name);
     }
     
     @Override

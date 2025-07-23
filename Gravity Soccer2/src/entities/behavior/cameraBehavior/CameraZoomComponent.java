@@ -14,7 +14,7 @@ public class CameraZoomComponent implements CameraZoomBehavior {
     private float maxZoom = 2f;
 
     @Override
-    public void update(Control control, Entity entities) {
+    public void render(Control control, Entity entities) {
         float deltaTime = Gdx.graphics.getDeltaTime();
 
         if (Gdx.input.isKeyPressed(Input.Keys.Q)) {
@@ -30,4 +30,10 @@ public class CameraZoomComponent implements CameraZoomBehavior {
 
         FreeCamera.camera.update();
     }
+
+	@Override
+	public void batch(Control control, Entity entity) {
+		// TODO Auto-generated method stub
+		
+	}
 }

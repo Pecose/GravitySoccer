@@ -80,4 +80,10 @@ public class FlameTrailSegment extends Entity {
          pts[0].x, pts[0].y
      );
  }
+
+@Override
+public void dispose() {
+	// TODO Auto-generated method stub
+	
+}
 }
