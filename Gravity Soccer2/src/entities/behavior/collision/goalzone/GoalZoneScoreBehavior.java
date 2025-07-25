@@ -10,15 +10,13 @@ import entities.Entity;
 import goal.GoalZone;
 import players.Ball;
 import players.side.SideTeam;
-import players.side.leftTeam.LeftTeam;
-import players.side.rightTeam.RightTeam;
 import score.GoalManager;
 
 public class GoalZoneScoreBehavior implements GoalZoneBehavior {
 
     @Override
     public void render(Control control, Entity entity) {
-    	((GoalZone)entity).getGoal().getFixtureManager().getFixture("goalzone").setSensor(true);
+//    	((GoalZone)entity).getGoal().getFixtureManager().getFixture("goalzone").setSensor(true);
         // Debug visuel : on affiche la zone du but en rouge transparent
         Gdx.gl.glEnable(GL20.GL_BLEND);
         control.renderer.setColor(new Color(100f, 100f, 100f, 0.3f));
@@ -38,12 +36,7 @@ public class GoalZoneScoreBehavior implements GoalZoneBehavior {
         Ball ball = (Ball) other;
         SideTeam side = ball.getLastTeamTouched();
 
-        // 📢 Logique de score
-        if (side instanceof LeftTeam) {
-            GoalManager.onLeftGoalScored();
-        } else if (side instanceof RightTeam) {
-            GoalManager.onRightGoalScored();
-        }
+        GoalManager.onGoalScored(side);
     }
 
     @Override

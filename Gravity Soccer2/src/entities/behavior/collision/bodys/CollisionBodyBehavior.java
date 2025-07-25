@@ -31,12 +31,7 @@ public class CollisionBodyBehavior implements Behavior, CollisionReactive {
 
         // Filtrage collisions
         fd.filter.categoryBits = CollisionBits.CATEGORY_PLAYER;
-        fd.filter.maskBits     =
-              CollisionBits.CATEGORY_BUMPER
-            | CollisionBits.CATEGORY_EDGES    
-            | CollisionBits.CATEGORY_BALL
-            | CollisionBits.CATEGORY_GOALZONE
-            ;
+        fd.filter.maskBits = CollisionBits.CATEGORY_BUMPER | CollisionBits.CATEGORY_EDGES | CollisionBits.CATEGORY_BALL | CollisionBits.CATEGORY_GOALZONE;
 
         // Création et userData
         Fixture fx = body.createFixture(fd);

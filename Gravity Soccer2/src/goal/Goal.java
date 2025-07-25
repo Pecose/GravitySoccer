@@ -51,7 +51,7 @@ public class Goal extends Entity {
 
         // ✅ on instancie le FixtureManager pour ce body
         fixtureManager = new FixtureManager(zone.getBody());
-        createGoalFixture(true);
+        createGoalFixture();
 
         // create nets
         filetFond   = new GoalNet(zoneX + CAGE_WIDTH - offset, zoneY,        3, CAGE_HEIGHT);
@@ -62,27 +62,35 @@ public class Goal extends Entity {
     }
 
     // ✅ nouvelle méthode qui crée la fixture via le FixtureManager
-    private void createGoalFixture(boolean sensor) {
-        float halfW = (CAGE_WIDTH  * 0.5f) / PhysicsWorld.PPM;
-        float halfH = (CAGE_HEIGHT * 0.5f) / PhysicsWorld.PPM;
+    private void createGoalFixture() {
+        float halfW = ((CAGE_WIDTH * 0.5f) / PhysicsWorld.PPM) -0.1f;
+        float halfH = ((CAGE_HEIGHT * 0.5f) / PhysicsWorld.PPM) -0.1f;
 
-        Vector2 center = new Vector2(halfW, halfH);
+        Vector2 center = new Vector2(halfW +0.1f, halfH +0.1f);
 
-        PolygonShape shape = new PolygonShape();
-        shape.setAsBox(halfW, halfH, center, 0f);
+        PolygonShape sensorShape = new PolygonShape();
+        sensorShape.setAsBox(halfW, halfH, center, 0f);
+        FixtureDef sensorFD = new FixtureDef();
+        sensorFD.shape            = sensorShape;
+        sensorFD.isSensor         = true;
+        sensorFD.filter.categoryBits = CollisionBits.CATEGORY_GOALZONE;
+        sensorFD.filter.maskBits     = CollisionBits.CATEGORY_BALL;
+        fixtureManager.setFixture("goalzone", sensorFD);
 
-        FixtureDef fd = new FixtureDef();
-        fd.shape            = shape;
-        fd.isSensor         = sensor;
-        fd.filter.categoryBits = CollisionBits.CATEGORY_GOALZONE;
-        fd.filter.maskBits     = CollisionBits.CATEGORY_BALL;
-
-        // ✅ utilisation du FixtureManager
-        fixtureManager.setFixture("goalzone", fd);
-
-        // tu peux aussi directement mettre ton userData
-        Fixture created = fixtureManager.getFixture("goalzone");
-        if (created != null) created.setUserData(zone);
+        PolygonShape blockshape = new PolygonShape();
+        blockshape.setAsBox(halfW, halfH, center, 0f);
+        FixtureDef blockFD = new FixtureDef();
+        blockFD.shape            = blockshape;
+        blockFD.isSensor         = false;
+        blockFD.filter.categoryBits = CollisionBits.CATEGORY_GOALZONE;
+        blockFD.filter.maskBits     = CollisionBits.CATEGORY_PLAYER;
+        fixtureManager.setFixture("goalzoneBlocker", blockFD);
+        
+        Fixture sensorFX = fixtureManager.getFixture("goalzone");
+        if (sensorFX != null) sensorFX.setUserData(zone);
+        
+        Fixture blockFX = fixtureManager.getFixture("goalzoneBlocker");
+        if (blockFX != null) blockFX.setUserData(zone);
     }
 
     @Override

@@ -8,6 +8,7 @@ import com.badlogic.gdx.physics.box2d.PolygonShape;
 import engine.Control;
 import entities.Entity;
 import entities.behavior.Behavior;
+import entities.behavior.collision.bodys.CollisionBits;
 import entities.world.PhysicsWorld;
 
 public class CollisionGoalZoneBehavior implements Behavior {
@@ -38,6 +39,7 @@ public class CollisionGoalZoneBehavior implements Behavior {
         fd.restitution = 1f;        // rebond parfait
         fd.friction    = 0f;        // pas de frottement
 
+        
         body.createFixture(fd);
         shape.dispose();
 

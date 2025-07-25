@@ -7,10 +7,11 @@ import com.badlogic.gdx.graphics.g2d.GlyphLayout;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import engine.Control;
+import entities.Registry;
 
 public class LeftPanel {
-    private String teamLeftAbbr = "BLU";
-    private Texture flagLeft = new Texture("flags/FRA.png");
+    private String teamLeftAbbr = Control.leftTeam.getName();
+    private Texture flagLeft = Control.leftTeam.getFlag();
 
     private static final float BOX_X          = 20;
     private static final float BOX_Y          = Gdx.graphics.getHeight() - 120;
@@ -47,9 +48,9 @@ public class LeftPanel {
 
         // --- 2) Drapeau ---
         float flagBlockY = abbrBlockY - FLAG_BOX_HEIGHT;
-        float flagDrawW  = 40f;
+        float flagDrawW  = 59f;
         float flagDrawH  = 8f;
-        float flagX      = colX;
+        float flagX      = colX-10;
         float flagY      = flagBlockY + (FLAG_BOX_HEIGHT - flagDrawH) / 2f;
         control.batch.draw(flagLeft, flagX, flagY, flagDrawW, flagDrawH);
 

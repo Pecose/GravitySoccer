@@ -7,7 +7,11 @@ import java.util.Random;
 
 import com.badlogic.gdx.math.Vector2;
 
+import entities.Entity;
 import entities.Registry;
+import entities.behavior.collision.goalzone.GoalZoneBehavior;
+import entities.behavior.collision.goalzone.GoalZoneTouchBehavior;
+import entities.world.PhysicsWorld;
 import goal.Goal;
 import players.Player;
 import players.country.Team;
@@ -43,7 +47,18 @@ public class LeftTeam implements SideTeam{
             String name = NAMES.get(i);
             addRandomizedPlayer(base.x, base.y, name, team, side);
         }
-        Registry.add(new Goal(team), "LeftGoal");
+//        Registry.add(new Goal(team), "LeftGoal");
+        
+        Entity old = Registry.getMap().remove("LeftGoal");
+        if (old != null && old.getBody() != null) {
+            PhysicsWorld.getWorld().destroyBody(old.getBody());
+        }
+        
+        Goal goal = new Goal(team);
+        goal.getZone().addBehavior(GoalZoneBehavior.class, new GoalZoneTouchBehavior());
+        goal.getZone().getGoal().getFixtureManager().getFixture("goalzone").setSensor(false);
+        Registry.add(goal, "LeftGoal");
+        Registry.getMap();
     }
 
     private void addRandomizedPlayer(int baseX, int baseY, String name, Team team, SideTeam side) {

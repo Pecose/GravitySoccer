@@ -29,7 +29,7 @@ public class GoalZoneTouchBehavior implements GoalZoneBehavior {
     @Override
     public void render(Control control, Entity entity) {
         // Debug visuel : affiche la zone avec la couleur de l'équipe
-    	((GoalZone)entity).getGoal().getFixtureManager().getFixture("goalzone").setSensor(false);
+//    	((GoalZone)entity).getGoal().getFixtureManager().getFixture("goalzone").setSensor(false);
         Gdx.gl.glEnable(GL20.GL_BLEND);
         control.renderer.setColor(((GoalZone)entity).getGoal().getTeam().getColor());
         control.renderer.rect(

@@ -7,7 +7,7 @@ import players.side.SideTeam;
 public class Greenée extends Team{
 
 	public Greenée(SideTeam sideTeam) {
-		super("Greenée", Color.GREEN, sideTeam);
+		super("GRE", "flags/GRE.png", Color.GREEN, sideTeam);
 	}
 
 }

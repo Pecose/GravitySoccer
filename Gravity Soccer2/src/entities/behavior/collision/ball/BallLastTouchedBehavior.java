@@ -15,6 +15,7 @@ import players.Player;
 import players.side.SideTeam;
 import players.side.leftTeam.LeftTeam;
 import players.side.rightTeam.RightTeam;
+import score.GoalManager;
 
 public class BallLastTouchedBehavior implements Behavior, CollisionReactive {
 
@@ -28,10 +29,9 @@ public class BallLastTouchedBehavior implements Behavior, CollisionReactive {
         if (!(other instanceof GoalZone)) Control.soundManager.playNextNote();
 
         // ✅ on ne s'intéresse qu'aux collisions avec un joueur
-        if (!(other instanceof Player)) {
-            return;
-        }
-
+        if (!(other instanceof Player)) { return; }
+        if (GoalManager.isPaused()) return;
+        
         Ball ball = (Ball) self;
         SideTeam side = ((Player) other).getSideTeam();
         ball.setLastTeamTouched(side);
@@ -45,11 +45,15 @@ public class BallLastTouchedBehavior implements Behavior, CollisionReactive {
             // La gauche touche → gauche = touch, droite = score
             leftZone.addBehavior(GoalZoneBehavior.class, new GoalZoneTouchBehavior());
             rightZone.addBehavior(GoalZoneBehavior.class, new GoalZoneScoreBehavior());
+            leftZone.getGoal().getFixtureManager().getFixture("goalzone").setSensor(false);
+            rightZone.getGoal().getFixtureManager().getFixture("goalzone").setSensor(true);
         } 
         else if (side instanceof RightTeam) {
             // La droite touche → droite = touch, gauche = score
             leftZone.addBehavior(GoalZoneBehavior.class, new GoalZoneScoreBehavior());
             rightZone.addBehavior(GoalZoneBehavior.class, new GoalZoneTouchBehavior());
+            leftZone.getGoal().getFixtureManager().getFixture("goalzone").setSensor(true);
+            rightZone.getGoal().getFixtureManager().getFixture("goalzone").setSensor(false);
         }
     }
 

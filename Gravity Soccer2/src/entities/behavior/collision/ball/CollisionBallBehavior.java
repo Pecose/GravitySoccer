@@ -34,11 +34,8 @@ public class CollisionBallBehavior implements Behavior {
         fd.friction    = 0f;
         
         fd.filter.categoryBits = CollisionBits.CATEGORY_BALL;
-        fd.filter.maskBits = 
-        		CollisionBits.CATEGORY_GOALZONE|
-        		CollisionBits.CATEGORY_BUMPER |
-        		CollisionBits.CATEGORY_EDGES |
-        		CollisionBits.CATEGORY_PLAYER;
+        fd.filter.maskBits = CollisionBits.CATEGORY_BUMPER | CollisionBits.CATEGORY_EDGES | CollisionBits.CATEGORY_PLAYER | CollisionBits.CATEGORY_GOALZONE;
+        
         
         body.createFixture(fd);
         shape.dispose();
